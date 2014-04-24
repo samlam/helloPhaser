@@ -37,7 +37,7 @@ Menu.prototype = {
   },
   startClick: function(){
   	this.game.state.start('play');
-  }
+  },
   update: function() {
 
   }

@@ -100,6 +100,9 @@ Menu.prototype = {
     	this);
     this.startButton.anchor.setTo(0.5,0.5);
   },
+  startClick: function(){
+  	this.game.state.start('play');
+  },
   update: function() {
 
   }
