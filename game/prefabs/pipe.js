@@ -9,6 +9,8 @@ var Pipe = function(game, x, y, frame) {
 
   this.body.allowGravity = false;
   this.body.immovable = true;
+
+  this.pipeHitSound = this.game.add.audio('pipeHit');
 };
 
 Pipe.prototype = Object.create(Phaser.Sprite.prototype);
@@ -19,5 +21,8 @@ Pipe.prototype.update = function() {
   // write your prefab's specific update code here
   
 };
+Pipe.prototype.pipeHit = function(){
+	this.pipeHitSound.play();
+}
 
 module.exports = Pipe;

@@ -26,7 +26,31 @@ PipeGroup.prototype.constructor = PipeGroup;
 PipeGroup.prototype.update = function() {
   
   // write your prefab's specific update code here
-  
+  this.checkWorldBounds();
 };
 
+PipeGroup.prototype.reset = function(x,y){
+	this.topPipe.reset(0,0);
+
+	this.bottomPipe.reset(0,480);
+
+	this.x = x;
+	this.y = y;
+
+	this.setAll('body.velocity.x',-200);
+
+	this.hasScored = false;
+
+	this.exists = true;
+};
+
+PipeGroup.prototype.checkWorldBounds = function(){
+	if(!this.topPipe.inWorld) {
+		this.exists = false;
+	}
+};
+
+PipeGroup.prototype.pipeHit = function(){
+	this.topPipe.pipeHit();
+};
 module.exports = PipeGroup;
