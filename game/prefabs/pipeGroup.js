@@ -17,7 +17,7 @@ var PipeGroup = function(game, parent) {
   // this.bottomPipe.body.velocity.x = -100;
   this.setAll('body.velocity.x', -200);
 
-  this.width = this.topPipe.width;
+  //this.width = this.topPipe.width;
 };
 
 PipeGroup.prototype = Object.create(Phaser.Group.prototype);
@@ -42,6 +42,10 @@ PipeGroup.prototype.reset = function(x,y){
 	this.hasScored = false;
 
 	this.exists = true;
+};
+
+PipeGroup.prototype.stop = function(){
+	this.setAll('body.velocity.x', 0);
 };
 
 PipeGroup.prototype.checkWorldBounds = function(){

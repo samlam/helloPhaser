@@ -11,6 +11,8 @@ var Ground = function(game, x, y, width,height) {
 
   this.body.allowGravity = false;
   this.body.immovable = true;
+
+  this.groundHitSound = this.game.add.audio('groundHit');
 };
 
 Ground.prototype = Object.create(Phaser.TileSprite.prototype);

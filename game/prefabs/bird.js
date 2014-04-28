@@ -15,6 +15,8 @@ var Bird = function(game, x, y, frame) {
   this.body.allowGravity = false;
 
   this.flapSound = this.game.add.audio('flap');
+
+  this.events.onKilled.add(this.onKilled, this);
 };
 
 Bird.prototype = Object.create(Phaser.Sprite.prototype);
@@ -30,10 +32,21 @@ Bird.prototype.update = function() {
 
 Bird.prototype.flap = function(){
 	this.flapSound.play();
-	
+
 	this.body.velocity.y = -400;
 
 	this.game.add.tween(this).to({angle:-40}, 100).start();
-}
+};
+
+Bird.prototype.onKilled = function(){
+	this.exists = true;
+	this.visible = true;
+	this.animations.stop();
+
+	var duration = 90 / this.y * 300;
+	this.game.add.tween(this).to({angle:90}, duration).start();
+	console.log('killed');
+	console.log('alive:', this.alive);
+};
 
 module.exports = Bird;

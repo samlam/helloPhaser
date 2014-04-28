@@ -54,15 +54,17 @@ Scoreboard.prototype.show = function(score){
 
 	if (score>= 10 && score < 20){
 		medal = this.game.add.sprite(-65, 7, 'medals', 1);
-		medal.anchor.setTo(0.5,0.5);
-		this.scoreboard.addChild(medal);
 	}else if (score >= 20) {
 		medal = this.game.add.sprite(-65, 7, 'medals', 0);
-		medal.anchro.setTo(0.5, 0.5);
-		this.scoreboard.addChild(medal);
-	}
+	};
+
+	this.game.add.tween(this).to({y:0},1000, Phaser.Easing.Bounce.Out, true);
 
 	if (medal){
+
+		medal.anchor.setTo(0.5,0.5);
+		this.scoreboard.addChild(medal);
+
 		var emitter = this.game.add.emitter(medal.x, medal.y, 400);
 		this.scoreboard.addChild(emitter);
 		emitter.width = medal.width;
@@ -81,7 +83,6 @@ Scoreboard.prototype.show = function(score){
 		emitter.start(false, 1000,1000);
 	}
 
-	this.game.add.tween(this).to({y:0},1000, Phaser.Easing.Bounce.Out, true);
 };
 Scoreboard.prototype.startClick = function(){
 	this.game.state.start('play');
