@@ -1,13 +1,15 @@
 'use strict';
 
 var Ground = function(game, x, y, width,height) {
-  //Phaser.Sprite.call(this, game, x, y, 'ground', frame);
-
-  // initialize your prefab here
   Phaser.TileSprite.call(this, game, x,y,width,height,'ground');
+
   this.autoScroll(-200,0);
 
+
+
   this.game.physics.arcade.enableBody(this);
+
+
 
   this.body.allowGravity = false;
   this.body.immovable = true;

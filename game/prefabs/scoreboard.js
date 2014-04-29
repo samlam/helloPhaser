@@ -1,11 +1,9 @@
 'use strict';
 
 var Scoreboard = function(game, x, y, frame) {
-  //Phaser.Sprite.call(this, game, x, y, 'Scoreboard', frame);
-  Phaser.Group.call(this, game);
-  // initialize your prefab here
 
   var gameover;
+
   Phaser.Group.call(this, game);
   gameover = this.create(this.game.width/2, 100, 'gameover');
   gameover.anchor.setTo(0.5,0.5);
@@ -82,7 +80,6 @@ Scoreboard.prototype.show = function(score){
 
 		emitter.start(false, 1000,1000);
 	}
-
 };
 Scoreboard.prototype.startClick = function(){
 	this.game.state.start('play');

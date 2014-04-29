@@ -25,15 +25,14 @@
 
       this.background = this.game.add.sprite(0,0,'background');
 
+      this.pipes = this.game.add.group();
+
       this.bird = new Bird(this.game, 100, this.game.height/2);
       this.game.add.existing(this.bird);
-
-      this.pipes = this.game.add.group();
 
       this.ground = new Ground(this.game,0,400,335,112);
       this.game.add.existing(this.ground);
 
-      this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
       this.flapKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
       this.flapKey.onDown.addOnce(this.startGame, this);
@@ -47,6 +46,9 @@
       // this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.7, this.generatePipes, this);
       // this.pipeGenerator.timer.start();
 
+      this.score = 0;
+      this.scoreText = this.game.add.bitmapText(this.game.width/2,10,'flappyfont', this.score.toString(), 24);
+
       this.instructionGroup = this.game.add.group();
       this.instructionGroup.add(this.game.add.sprite(this.game.width/2, 100, 'getReady'));
       this.instructionGroup.add(this.game.add.sprite(this.game.width/2, 325, 'instructions'));
@@ -56,11 +58,6 @@
       this.pipeGenerator = null;
 
       this.gameover = false;
-
-      this.score = 0;
-
-      this.scoreText = this.game.add.bitmapText(this.game.width/2,10,'flappyfont', this.score.toString(), 24);
-      this.scoreText.visible = false;
 
       this.scoreSound = this.game.add.audio('score');
       this.pipeHitSound = this.game.add.audio('pipeHit');
@@ -79,8 +76,8 @@
       this.game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
       this.bird.destroy();
       this.pipes.destroy();
-      //this.ground.destroy();
-      //this.background.destroy();
+      // this.ground.destroy();
+      // this.background.destroy();
       this.scoreboard.destroy();
     },
     startGame: function(){
@@ -88,7 +85,7 @@
         this.bird.body.allowGravity = true;
         this.bird.alive = true;
 
-        this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.45, this.generatePipes, this);
+        this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 1.25, this.generatePipes, this);
         this.pipeGenerator.timer.start();
 
         this.instructionGroup.destroy();
@@ -116,19 +113,11 @@
           this.pipeHitSound.play();
         };
 
-
-        // if (!this.scoreboard){
-        //   this.scoreboard = new Scoreboard(this.game);
-        //   this.game.add.existing(this.scoreboard);
-        // }
-        // this.scoreboard.show(this.score);
-        // this.bird.onGround = true;
-
       if (!this.gameover){
         this.gameover = true;
         this.bird.kill();
         this.pipes.callAll('stop');
-        this.pipeGenerator.timer.stop();
+        this.pipeGenerator.timer.stop(true);
         this.ground.stopScroll();
       }
     },

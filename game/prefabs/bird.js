@@ -2,19 +2,24 @@
 
 var Bird = function(game, x, y, frame) {
   Phaser.Sprite.call(this, game, x, y, 'bird', frame);
-
-  // initialize your prefab here
   this.anchor.setTo(0.5, 0.5);
-
   this.animations.add('flap');
   this.animations.play('flap', 12, true);
 
+  this.flapSound = this.game.add.audio('flap');
+
+  this.name = 'bird';
   this.alive = false;
+  this.onGround = false;
+
+
+
+
 
   this.game.physics.arcade.enableBody(this);
   this.body.allowGravity = false;
+  this.body.collideWorldBounds = true;
 
-  this.flapSound = this.game.add.audio('flap');
 
   this.events.onKilled.add(this.onKilled, this);
 };
@@ -28,14 +33,20 @@ Bird.prototype.update = function() {
   if (this.angle < 90 && this.alive){
   	this.angle += 2.5;
   }
+
+  if(!this.alive) {
+  	this.body.velocity.x = 0;
+  }
 };
 
 Bird.prototype.flap = function(){
-	this.flapSound.play();
+	if (!!this.alive){
+		this.flapSound.play();
 
-	this.body.velocity.y = -400;
+		this.body.velocity.y = -400;
 
-	this.game.add.tween(this).to({angle:-40}, 100).start();
+		this.game.add.tween(this).to({angle:-40}, 100).start();
+	}
 };
 
 Bird.prototype.onKilled = function(){

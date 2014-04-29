@@ -2,8 +2,6 @@
 
 var Pipe = function(game, x, y, frame) {
   Phaser.Sprite.call(this, game, x, y, 'pipe', frame);
-
-  // initialize your prefab here
   this.anchor.setTo(0.5, 0.5);
   this.game.physics.arcade.enableBody(this);
 
